@@ -1,3 +1,14 @@
+## Updates/Uploads of Code
+
+Use the following format when updating/uploading code and adding details about the code (the #th Version is for the first field):
+
+#th Version
+
+Added the following
+- [filename]: [whatever was altered]
+- [filename2]: [whatever was altered]
+- and so on...
+
 ## TeamCode Module
 
 Welcome!
