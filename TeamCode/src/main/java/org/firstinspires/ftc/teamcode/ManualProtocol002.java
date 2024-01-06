@@ -44,13 +44,14 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@TeleOp(name="Manual Protocol 001", group="Linear OpMode")
+@TeleOp(name="Manual Protocol 002", group="Linear OpMode")
 public class ManualProtocol002 extends Main002 {
     private double left_front_power = 0;
     private double right_front_power = 0;
     private double left_back_power = 0;
     private double right_back_power = 0;
     private double linear_actuator_power = 0;
+    private double chopsticks_arm_power = 0;
 
     @Override
     public void runOpMode() {
@@ -77,7 +78,9 @@ public class ManualProtocol002 extends Main002 {
         double gamepadOneLeftX = gamepad1.left_stick_x;
         double gamepadOneLeftY = gamepad1.left_stick_y;
 
-        double gamepadTwoLeftY = gamepad2.left_stick_y;
+        boolean gamepad2Down = gamepad2.dpad_down;
+
+        double gamepad2LeftY = gamepad2.left_stick_y;
 
         double rAxis = gamepad1.right_trigger - gamepad1.left_trigger;
 
@@ -90,18 +93,26 @@ public class ManualProtocol002 extends Main002 {
         left_back_power = -math.getWheelForceManual(gamepadOneLeftX, gamepadOneLeftY, 3, rAxis, theta, z);
         right_back_power = math.getWheelForceManual(gamepadOneLeftX, gamepadOneLeftY, 4, rAxis, theta, z);
 
-        linear_actuator_power = -math.getLinearActuatorForce(gamepadTwoLeftY);
-
         telemetry.addData("lpb", left_back_power + " q: " + quad + " theta: " + theta + "x: " + gamepadOneLeftX + "y: " + gamepadOneLeftY + "x2: " + gamepad1.right_stick_x);
         telemetry.addData("lpf", left_front_power);
         telemetry.addData("rpb", right_back_power);
         telemetry.addData("rpf", right_front_power);
+
+        telemetry.addData("LINEAR ACTUATOR TICKS:", linear_actuator.getCurrentPosition());
+
+        telemetry.addData("CHOPSTICKS ARM TICKS:", chopsticks_arm.getCurrentPosition());
+
+        telemetry.addData("CHOPSTICKS POSITION:", chopsticks.getPosition());
 
         left_front.setVelocity(left_front_power * MAX_NUM_TICKS_MOVEMENT * MOVEMENT_RPM);
         right_front.setVelocity(right_front_power * MAX_NUM_TICKS_MOVEMENT * MOVEMENT_RPM);
         left_back.setVelocity(left_back_power * MAX_NUM_TICKS_MOVEMENT * MOVEMENT_RPM);
         right_back.setVelocity(right_back_power * MAX_NUM_TICKS_MOVEMENT * MOVEMENT_RPM);
 
-        linear_actuator.setVelocity(linear_actuator_power * MAX_NUM_TICKS_ACTUATOR * ACTUATOR_RPM);
+        if (gamepad2Down == true) {
+
+        } else {
+
+        }
     }
 }
