@@ -5,8 +5,8 @@ public class Algorithms002 extends Main002 {
     public static final float rotationPerRevolution = 2.314f;
     // dictates how fast the bot goes (0.05f is really slow, 0.1f is regular, more is faster)
     float linearActuatorControlMultiplier = 2.00f;
-    float wheelControlMultiplier = 0.03f;
-    float chopsticksArmControlMultiplier = 1.00f;
+    float wheelControlMultiplier = 0.05f;
+    float chopsticksArmControlMultiplier = 0.05f;
 
 
     public void Initialize() {
@@ -22,7 +22,7 @@ public class Algorithms002 extends Main002 {
         }
     }
 
-    public double getArmForce(double y) {
+    public double getChopsticksArmForce(double y) {
         if ((y > 0) || (y < 0)) {
             return y * chopsticksArmControlMultiplier;
         } else {
@@ -94,17 +94,17 @@ public class Algorithms002 extends Main002 {
         if (x2 != 0) {
             if (i == 1 || i == 3) {
                 if (x2 > 0) {
-                    rotationPower = 1;
-                } else if (x2 < 0) {
                     rotationPower = -1;
+                } else if (x2 < 0) {
+                    rotationPower = 1;
                 } else {
                     rotationPower = 0;
                 }
             } else if (i == 2 || i == 4) {
                 if (x2 > 0) {
-                    rotationPower = -1;
-                } else if (x2 < 0) {
                     rotationPower = 1;
+                } else if (x2 < 0) {
+                    rotationPower = -1;
                 } else {
                     rotationPower = 0;
                 }

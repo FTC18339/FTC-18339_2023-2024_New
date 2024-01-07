@@ -30,6 +30,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 /**
  * This file contains an minimal example of a Linear "OpMode". An OpMode is a 'program' that runs in either
@@ -64,6 +65,7 @@ public class ManualProtocol002 extends Main002 {
         if (opModeIsActive()) {
             while (opModeIsActive()) {
                 setMotorForces();
+                setChopsticksForces();
 
                 telemetry.update();
 
@@ -78,8 +80,6 @@ public class ManualProtocol002 extends Main002 {
         double gamepadOneLeftX = gamepad1.left_stick_x;
         double gamepadOneLeftY = gamepad1.left_stick_y;
 
-        boolean gamepad2Down = gamepad2.dpad_down;
-
         double gamepad2LeftY = gamepad2.left_stick_y;
 
         double rAxis = gamepad1.right_trigger - gamepad1.left_trigger;
@@ -88,10 +88,15 @@ public class ManualProtocol002 extends Main002 {
         double theta = math.theta(gamepadOneLeftX, gamepadOneLeftY, quad);
         double z = (double) Math.sqrt(Math.pow(gamepadOneLeftX, 2) + Math.pow(gamepadOneLeftY, 2)) * math.wheelControlMultiplier;
 
-        left_front_power = -math.getWheelForceManual(gamepadOneLeftX, gamepadOneLeftY, 1, rAxis, theta, z);
-        right_front_power = math.getWheelForceManual(gamepadOneLeftX, gamepadOneLeftY, 2, rAxis, theta, z);
-        left_back_power = -math.getWheelForceManual(gamepadOneLeftX, gamepadOneLeftY, 3, rAxis, theta, z);
-        right_back_power = math.getWheelForceManual(gamepadOneLeftX, gamepadOneLeftY, 4, rAxis, theta, z);
+        left_front_power = math.getWheelForceManual(gamepadOneLeftX, gamepadOneLeftY, 1, rAxis, theta, z);
+        right_front_power = -math.getWheelForceManual(gamepadOneLeftX, gamepadOneLeftY, 2, rAxis, theta, z);
+        left_back_power = math.getWheelForceManual(gamepadOneLeftX, gamepadOneLeftY, 3, rAxis, theta, z);
+        right_back_power = -math.getWheelForceManual(gamepadOneLeftX, gamepadOneLeftY, 4, rAxis, theta, z);
+
+        /* if ((chopsticks_arm.getCurrentPosition() > -1635) && (chopsticks_arm.getCurrentPosition() < 50)) {
+            chopsticks_arm_power = math.getChopsticksArmForce(gamepad2LeftY);
+        } */
+        chopsticks_arm_power = math.getChopsticksArmForce(gamepad2LeftY);
 
         telemetry.addData("lpb", left_back_power + " q: " + quad + " theta: " + theta + "x: " + gamepadOneLeftX + "y: " + gamepadOneLeftY + "x2: " + gamepad1.right_stick_x);
         telemetry.addData("lpf", left_front_power);
@@ -104,15 +109,37 @@ public class ManualProtocol002 extends Main002 {
 
         telemetry.addData("CHOPSTICKS POSITION:", chopsticks.getPosition());
 
+        telemetry.addData("WRIST POSITION:", wrist.getPosition());
+
         left_front.setVelocity(left_front_power * MAX_NUM_TICKS_MOVEMENT * MOVEMENT_RPM);
         right_front.setVelocity(right_front_power * MAX_NUM_TICKS_MOVEMENT * MOVEMENT_RPM);
         left_back.setVelocity(left_back_power * MAX_NUM_TICKS_MOVEMENT * MOVEMENT_RPM);
         right_back.setVelocity(right_back_power * MAX_NUM_TICKS_MOVEMENT * MOVEMENT_RPM);
 
-        if (gamepad2Down == true) {
+        chopsticks_arm.setVelocity(chopsticks_arm_power * CHOPSTICKS_ARM_RPM * MAX_NUM_TICKS_CHOPSTICKS_ARM);
+    }
 
+    public void setChopsticksForces () {
+        // open
+        boolean gamepad2A = gamepad2.a;
+
+        // close
+        boolean gamepad2B = gamepad2.b;
+
+        double triggers = gamepad2.right_trigger - gamepad2.left_trigger;
+
+        if (gamepad2A) {
+            chopsticks.setPosition(.4);
+        }
+
+        if (gamepad2B) {
+            chopsticks.setPosition(.33);
+        }
+
+        if ((triggers > 0) || (triggers < 0)) {
+            wrist.setPosition(triggers);
         } else {
-
+            wrist.close();
         }
     }
 }

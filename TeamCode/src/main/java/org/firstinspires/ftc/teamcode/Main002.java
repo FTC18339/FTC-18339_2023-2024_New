@@ -20,7 +20,8 @@ public class Main002 extends LinearOpMode {
     // (NEED TO GET NUMBERS, THIS FROM 22-23) public final float MAX_NUM_TICKS_LINEAR_ACTUATOR = 384.5f;
     public final float LINEAR_ACTUATOR_RPM = 110;
 
-    // (NEED TO GET NUMBERS) public final float MAX_NUM_TICKS_CHOPSTICKS_ARM = ;
+    // (NEED TO GET NUMBERS)
+    public final float MAX_NUM_TICKS_CHOPSTICKS_ARM = 1000;
     public final float CHOPSTICKS_ARM_RPM = 40;
 
     public Algorithms002 math;
