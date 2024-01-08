@@ -84,6 +84,9 @@ public class ManualProtocol002 extends Main002 {
 
         double rAxis = gamepad1.right_trigger - gamepad1.left_trigger;
 
+        boolean gamepad2X = gamepad2.x;
+        boolean gamepad2Y = gamepad2.y;
+
         int quad = math.getQuad(gamepadOneLeftX, gamepadOneLeftY);
         double theta = math.theta(gamepadOneLeftX, gamepadOneLeftY, quad);
         double z = (double) Math.sqrt(Math.pow(gamepadOneLeftX, 2) + Math.pow(gamepadOneLeftY, 2)) * math.wheelControlMultiplier;
@@ -126,20 +129,16 @@ public class ManualProtocol002 extends Main002 {
         // close
         boolean gamepad2B = gamepad2.b;
 
-        double triggers = gamepad2.right_trigger - gamepad2.left_trigger;
+        double gamepadTwoRightY = gamepad2.right_stick_y;
 
         if (gamepad2A) {
             chopsticks.setPosition(.4);
-        }
-
-        if (gamepad2B) {
+        } else if (gamepad2B) {
             chopsticks.setPosition(.33);
         }
 
-        if ((triggers > 0) || (triggers < 0)) {
-            wrist.setPosition(triggers);
-        } else {
-            wrist.close();
+        if (gamepadTwoRightY != 0) {
+            wrist.setPosition(wrist.getPosition() + (gamepadTwoRightY * -.05));
         }
     }
 }
