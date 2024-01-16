@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class Main002 extends LinearOpMode {
     public Servo wrist;
     public Servo chopsticks;
+    public Servo drone_launcher;
     public DcMotorEx left_front;
     public DcMotorEx right_front;
     public DcMotorEx left_back;
@@ -22,6 +23,7 @@ public class Main002 extends LinearOpMode {
 
     // (NEED TO GET NUMBERS)
     public final float MAX_NUM_TICKS_CHOPSTICKS_ARM = 1000;
+    public final float MAX_NUM_TICKS_LINEAR_ACTUATOR = 1000;
     public final float CHOPSTICKS_ARM_RPM = 40;
 
     public Algorithms002 math;
@@ -51,6 +53,8 @@ public class Main002 extends LinearOpMode {
         linear_actuator = hardwareMap.get(DcMotorEx.class, "linear_actuator");
 
         chopsticks_arm = hardwareMap.get(DcMotorEx.class, "chopsticks_arm");
+
+        drone_launcher = hardwareMap.get(Servo.class, "drone_launcher");
     }
 
     public void initManualModes() {

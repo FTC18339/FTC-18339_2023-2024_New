@@ -3,6 +3,9 @@ package org.firstinspires.ftc.teamcode;
 public class Algorithms002 extends Main002 {
     public static final float wheelCircumferenceMm = 301.59f;
     public static final float rotationPerRevolution = 2.314f;
+
+    public static final float mmPerInch = 25.4f;
+
     // dictates how fast the bot goes (0.05f is really slow, 0.1f is regular, more is faster)
     float linearActuatorControlMultiplier = 2.00f;
     float wheelControlMultiplier = 0.085f;
