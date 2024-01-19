@@ -65,7 +65,7 @@ public class ManualProtocol002 extends Main002 {
         if (opModeIsActive()) {
             while (opModeIsActive()) {
                 setMotorForces();
-                setChopsticksForces();
+                setServoForces();
 
                 telemetry.update();
 
@@ -122,7 +122,7 @@ public class ManualProtocol002 extends Main002 {
         linear_actuator.setVelocity(linear_actuator_power * LINEAR_ACTUATOR_RPM * MAX_NUM_TICKS_LINEAR_ACTUATOR);
     }
 
-    public void setChopsticksForces () {
+    public void setServoForces () {
         // open
         boolean gamepad2A = gamepad2.a;
 
@@ -139,6 +139,11 @@ public class ManualProtocol002 extends Main002 {
 
         if (gamepadTwoRightY != 0) {
             wrist.setPosition(wrist.getPosition() + (gamepadTwoRightY * -.05));
+        }
+
+        boolean gamepad2Y = gamepad2.y;
+        if (gamepad2Y) {
+
         }
     }
 }
