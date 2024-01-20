@@ -74,10 +74,6 @@ public class Main002 extends LinearOpMode {
         right_front.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         left_back.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         left_front.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-        linear_actuator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-        chopsticks_arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     public void RunToPositionAutonomousMovement() {
@@ -85,8 +81,6 @@ public class Main002 extends LinearOpMode {
         right_front.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         left_back.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         left_front.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        chopsticks_arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
     public void StopMotors() {

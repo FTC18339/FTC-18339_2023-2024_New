@@ -31,6 +31,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 
 /**
  * This file contains an minimal example of a Linear "OpMode". An OpMode is a 'program' that runs in either
@@ -141,7 +142,8 @@ public class ManualProtocol002 extends Main002 {
 
         boolean gamepad2Y = gamepad2.y;
         if (gamepad2Y) {
-            drone_launcher.setPosition(drone_launcher.getPosition() - .1);
+            drone_launcher.setDirection(Servo.Direction.REVERSE);
+            drone_launcher.setPosition(.3);
         }
     }
 }

@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
-public class Autonomous001 extends Main002 {
+public abstract class Autonomous001 extends Main002 {
 
     public Command[] commands;
     boolean runningAuto = false;
@@ -19,7 +19,7 @@ public class Autonomous001 extends Main002 {
 
         initAutonomousModes();
 
-        ChildCommandInitialization();
+        childCommandInitialization();
 
         waitForStart();
 
@@ -68,8 +68,6 @@ public class Autonomous001 extends Main002 {
             SetTicksAndMotorsForMovement(ticks, false);
         } else if (name == "ROTATE" || name == "ONEREVROT") {
             SetTicksAndMotorsForMovement(ticks, true);
-        } else if (name == "IKSTARTPOSITION") {
-            //SetIKArmForTarget(0, 1, 0);
         }
 
         initAutonomousModes();
@@ -79,12 +77,15 @@ public class Autonomous001 extends Main002 {
 
     void SetTicksAndMotorsForMovement(int ticks, boolean rot) {
         int rotMultiplier = 1;
-        if(rot) rotMultiplier = -1;
+        if (rot) {
+            rotMultiplier = -1;
+        }
 
-        left_back.setTargetPosition(rotMultiplier * ticks);
+        left_back.setTargetPosition(ticks);
         left_front.setTargetPosition(ticks);
         right_back.setTargetPosition(rotMultiplier * ticks);
-        right_front.setTargetPosition(ticks);
+        right_front.setTargetPosition(rotMultiplier * ticks);
+        
         RunToPositionAutonomousMovement();
 
         double ticksSpeed = MAX_NUM_TICKS_MOVEMENT * 0.05 * MOVEMENT_RPM;
@@ -98,5 +99,6 @@ public class Autonomous001 extends Main002 {
 
         }
     }
-    public void ChildCommandInitialization() {}
+
+    public void childCommandInitialization() {};
 }
