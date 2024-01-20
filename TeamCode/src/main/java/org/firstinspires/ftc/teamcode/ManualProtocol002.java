@@ -75,7 +75,7 @@ public class ManualProtocol002 extends Main002 {
     }
 
     public void setMotorForces() {
-        if(!noNullHardware()) return;
+        if (!noNullHardware()) return;
 
         double gamepadOneLeftX = gamepad1.left_stick_x;
         double gamepadOneLeftY = gamepad1.left_stick_y;
@@ -122,28 +122,26 @@ public class ManualProtocol002 extends Main002 {
         linear_actuator.setVelocity(linear_actuator_power * LINEAR_ACTUATOR_RPM * MAX_NUM_TICKS_LINEAR_ACTUATOR);
     }
 
-    public void setServoForces () {
+    public void setServoForces() {
         // open
         boolean gamepad2A = gamepad2.a;
 
         // close
         boolean gamepad2B = gamepad2.b;
-
-        double gamepadTwoRightY = gamepad2.right_stick_y;
-
         if (gamepad2A) {
             chopsticks.setPosition(.4);
         } else if (gamepad2B) {
             chopsticks.setPosition(.33);
         }
 
+        double gamepadTwoRightY = gamepad2.right_stick_y;
         if (gamepadTwoRightY != 0) {
             wrist.setPosition(wrist.getPosition() + (gamepadTwoRightY * -.05));
         }
 
         boolean gamepad2Y = gamepad2.y;
         if (gamepad2Y) {
-
+            drone_launcher.setPosition(drone_launcher.getPosition() - .1);
         }
     }
 }
