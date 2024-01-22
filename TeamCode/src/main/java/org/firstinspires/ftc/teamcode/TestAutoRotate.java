@@ -7,7 +7,7 @@ public class TestAutoRotate extends Autonomous001 {
     @Override
     public void childCommandInitialization() {
         commands = new Command[] {
-                new Command("ROTATE", 90, true, 0)
+                new Command("ONEREVROT", 90, true, 0)
         };
     }
 }
