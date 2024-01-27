@@ -8,12 +8,16 @@ public class Algorithms002 extends Main002 {
 
     // dictates how fast the bot goes (0.05f is really slow, 0.1f is regular, more is faster)
     float linearActuatorControlMultiplier = 12.00f;
-    float wheelControlMultiplier = 0.15f;
+    float wheelControlMultiplier = 0.135f;
     float chopsticksArmControlMultiplier = 0.04f;
 
 
     public void Initialize() {
 
+    }
+
+    public void setMovementMultiplier(double x) {
+        wheelControlMultiplier = (float) x;
     }
 
     // this function determines the force of the linear actuator motor that moves the gripper arm up and down

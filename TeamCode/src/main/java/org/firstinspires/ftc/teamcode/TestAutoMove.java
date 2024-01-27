@@ -7,7 +7,8 @@ public class TestAutoMove extends Autonomous001 {
     @Override
     public void childCommandInitialization() {
         commands = new Command[] {
-                new Command("MOVE", 12 * mmPerInch, false, 0)
+                new Command("TEMPROTATE", 22 * mmPerInch, false, 0),
+                new Command("TEMPROTATE", -22 * mmPerInch, false, 0)
         };
     }
 }

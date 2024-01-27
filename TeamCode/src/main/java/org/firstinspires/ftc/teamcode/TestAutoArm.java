@@ -3,11 +3,11 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 @Autonomous
-public class BlueLeft extends Autonomous001 {
+public class TestAutoArm extends Autonomous001 {
     @Override
     public void childCommandInitialization() {
         commands = new Command[] {
-                new Command("MOVE", 45 * mmPerInch, true, 0)
+                new Command("CHOPSTICKS ARM", 10, false, 0)
         };
     }
 }

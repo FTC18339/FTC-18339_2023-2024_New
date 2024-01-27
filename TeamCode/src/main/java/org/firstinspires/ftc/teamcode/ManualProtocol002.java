@@ -55,8 +55,6 @@ public class ManualProtocol002 extends Main002 {
     private double linear_actuator_power = 0;
     private double chopsticks_arm_power = 0;
 
-    private double linActSlower = 1.0;
-
     @Override
     public void runOpMode() {
         initMaths();
@@ -89,7 +87,16 @@ public class ManualProtocol002 extends Main002 {
 
         double gamepad2Triggers = gamepad2.right_trigger - gamepad2.left_trigger;
 
-        boolean gamepad2X = gamepad2.x;
+        boolean gamepad1X = gamepad1.x;
+        boolean gamepad1Y = gamepad1.y;
+
+        if (gamepad1X) {
+            math.setMovementMultiplier(.0375);
+        }
+
+        if (gamepad1Y) {
+            math.setMovementMultiplier(.135);
+        }
 
         int quad = math.getQuad(gamepadOneLeftX, gamepadOneLeftY);
         double theta = math.theta(gamepadOneLeftX, gamepadOneLeftY, quad);
@@ -124,13 +131,7 @@ public class ManualProtocol002 extends Main002 {
 
         chopsticks_arm.setVelocity(chopsticks_arm_power * CHOPSTICKS_ARM_RPM * MAX_NUM_TICKS_CHOPSTICKS_ARM);
 
-        if (gamepad2X && (linActSlower == 1.0)) {
-            linActSlower = .25;
-        } else if (gamepad2X && (linActSlower == .25)) {
-            linActSlower = 1.0;
-        }
-
-        linear_actuator.setVelocity(linActSlower * linear_actuator_power * LINEAR_ACTUATOR_RPM * MAX_NUM_TICKS_LINEAR_ACTUATOR);
+        linear_actuator.setVelocity(linear_actuator_power * LINEAR_ACTUATOR_RPM * MAX_NUM_TICKS_LINEAR_ACTUATOR);
     }
 
     public void setServoForces() {

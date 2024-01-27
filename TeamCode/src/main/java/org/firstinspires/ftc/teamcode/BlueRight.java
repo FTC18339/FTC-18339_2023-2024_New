@@ -7,7 +7,13 @@ public class BlueRight extends Autonomous001 {
     @Override
     public void childCommandInitialization() {
         commands = new Command[] {
-
+                new Command("MOVE", 54 * mmPerInch, true, 0),
+                new Command("TEMPROTATE", -22 * mmPerInch, true, 0),
+                new Command("MOVE", -36 * mmPerInch, true, 0),
+                new Command("TEMPROTATE", -22 * mmPerInch, true, 0),
+                new Command("MOVE", 54 * mmPerInch, true, 0),
+                new Command("TEMPROTATE", -22 * mmPerInch, true, 0),
+                new Command("MOVE", 36 * mmPerInch, true, 0)
         };
     }
 }

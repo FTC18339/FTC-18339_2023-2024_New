@@ -68,12 +68,17 @@ public class Main002 extends LinearOpMode {
         chopsticks_arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
-    public void initAutonomousModes() {
-        resetMotorsAutonomous();
+    public void initAutonomousModesMovement() {
+        resetMotorsAutonomousMovement();
         right_back.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         right_front.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         left_back.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         left_front.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    }
+
+    public void initAutonomousArm() {
+        resetMotorsAutonomousArm();
+        chopsticks_arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     public void RunToPositionAutonomousMovement() {
@@ -81,6 +86,10 @@ public class Main002 extends LinearOpMode {
         right_front.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         left_back.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         left_front.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    }
+
+    public void runToPositionAutonomousArm() {
+        chopsticks_arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
     public void StopMotors() {
@@ -94,11 +103,15 @@ public class Main002 extends LinearOpMode {
         chopsticks_arm.setVelocity(0);
     }
 
-    public void resetMotorsAutonomous() {
+    public void resetMotorsAutonomousMovement() {
         right_back.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         right_front.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         left_back.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         left_front.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    }
+
+    public void resetMotorsAutonomousArm() {
+        chopsticks_arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
     public boolean noNullHardware() {

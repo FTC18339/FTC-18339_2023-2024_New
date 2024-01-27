@@ -17,7 +17,9 @@ public abstract class Autonomous001 extends Main002 {
         initHardware();
         initManualModes();
 
-        initAutonomousModes();
+        initAutonomousModesMovement();
+
+        initAutonomousArm();
 
         childCommandInitialization();
 
@@ -49,7 +51,7 @@ public abstract class Autonomous001 extends Main002 {
     was originally gathered. Rotation section is convoluted and unsure. Also need to re-understand how math
     behind manual protocol works. Unfortunately, the compass app is inaccurate as I tested it on another
     phone, and it varied relatively greatly (more than 5 degrees). */
-    double rotationAngleOfOneRevolution = Math.toRadians(55.1);
+    double rotationAngleOfOneRevolution = Math.toRadians(35);
     public void RunAutoCommand(Command command) {
         String name = command.name;
         double data = command.data;
@@ -63,7 +65,7 @@ public abstract class Autonomous001 extends Main002 {
                 case "ROTATE":
                     // Find the revolution the wheels must take for a certain angle, use the desired
                     // angle and divide by the rotation that one wheel revolution provides.
-                    revs = Math.toRadians(data) / rotationAngleOfOneRevolution;
+                    revs = data / rotationAngleOfOneRevolution;
                     break;
                 case "ONEREVROT":
                     revs = 1;
@@ -83,28 +85,27 @@ public abstract class Autonomous001 extends Main002 {
 
         if (name == "MOVE") {
             setMovingTicks(ticks);
-        } else if (name == "ROTATE") {
+        } /* else if (name == "ROTATE") {
             setRotateTicks(ticks);
-        } else if (name == "ONEREVROT") {
-            SetTicksAndMotorsForMovement(ticks, true);
+        } */ else if (name == "ONEREVROT") {
+            setRotateTicks(ticks);
         } else if (name == "CHOPSTICKS ARM") {
-            setChopsticksArmTicks(ticks);
+            setChopsticksArmTicks(command.data);
         } else if (name == "WRIST") {
             setWrist();
         } else if (name == "CHOPSTICKS") {
             setChopsticks();
+        } else if (name == "TEMPROTATE") {
+            tempRotate(ticks);
         }
 
-        initAutonomousModes();
+        initAutonomousModesMovement();
         commandsIndex++;
         runningAuto = false;
     }
 
-    void SetTicksAndMotorsForMovement(int ticks, boolean rot) {
-        int rotMultiplier = 1;
-        if (rot) {
-            rotMultiplier = -1;
-        }
+    void setRotateTicks(int ticks) {
+        int rotMultiplier = -1;
 
         left_back.setTargetPosition(rotMultiplier * ticks * -1);
         left_front.setTargetPosition(ticks * -1);
@@ -143,12 +144,36 @@ public abstract class Autonomous001 extends Main002 {
         }
     }
 
-    void setRotateTicks(int ticks) {
+    void tempRotate(int ticks) {
+        left_back.setTargetPosition(ticks);
+        left_front.setTargetPosition(ticks);
+        right_back.setTargetPosition(ticks);
+        right_front.setTargetPosition(ticks);
 
+        RunToPositionAutonomousMovement();
+
+        left_back.setVelocity(MAX_NUM_TICKS_MOVEMENT * 0.05 * MOVEMENT_RPM);
+        left_front.setVelocity(MAX_NUM_TICKS_MOVEMENT * 0.05 * MOVEMENT_RPM);
+        right_back.setVelocity(MAX_NUM_TICKS_MOVEMENT * 0.05 * MOVEMENT_RPM);
+        right_front.setVelocity(MAX_NUM_TICKS_MOVEMENT * 0.05 * MOVEMENT_RPM);
+
+        while (left_back.isBusy() && opModeIsActive()) {
+
+        }
     }
 
-    void setChopsticksArmTicks(int ticks) {
+    void setChopsticksArmTicks(double amount) {
+        chopsticks_arm.setTargetPosition((int) amount * -100);
 
+        runToPositionAutonomousArm();
+
+        double chopSpeed = MAX_NUM_TICKS_CHOPSTICKS_ARM * 0.05 * CHOPSTICKS_ARM_RPM;
+
+        chopsticks_arm.setVelocity(-chopSpeed);
+
+        while (chopsticks_arm.isBusy() && opModeIsActive()) {
+
+        }
     }
 
     void setWrist() {
